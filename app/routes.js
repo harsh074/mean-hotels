@@ -13,9 +13,11 @@ var apiRoutes = express.Router(),
 var mv = require('mv');
 
 var blogRouter = express.Router({mergeParams: true});
+var hotelRouter = express.Router({mergeParams: true});
 module.exports = function(app) {
 	app.use('/api', apiRoutes);
 	apiRoutes.use('/blog', blogRouter);
+	apiRoutes.use('/hotel', hotelRouter);
 
 	function hashPassword(password) {
 		return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -63,25 +65,39 @@ module.exports = function(app) {
 		res.json({ message: 'Welcome to the coolest API on earth!' });
 	});
 
+	// route to create collection
+	apiRoutes.get('/createCollection',function(req,res){
+		var db = req.db;
+		var userCollection = db.create('auth_users');
+		var counterCollection =  db.create('authuser_counter');
+		// var blogCollection = db.get('blogs');
+		counterCollection.insert({"counterid": "counterId","sequence_value" : 1});
+		// blogCollection.remove({});
+		res.json({ message: 'Done' });
+	});
+
 	// route to reset the DataBase
-	apiRoutes.get('/clearcollection',function(req,res){
+	apiRoutes.get('/clearCollection',function(req,res){
 		var db = req.db;
 		var userCollection = db.get('auth_users');
 		var counterCollection =  db.get('authuser_counter');
 		var blogCollection = db.get('blogs');
 		userCollection.remove({});
-		counterCollection.findAndModify({query:{"counterid": "counterId"},update:{$set:{"sequence_value" : 1}}});
+		counterCollection.remove({});
+		counterCollection.insert({"counterid": "counterId","sequence_value" : 1});
+		// counterCollection.findAndModify({query:{"counterid": "counterId"},update:{$set:{"sequence_value" : 1}}});
 		blogCollection.remove({});
 		res.json({ message: 'Done' });
 	});
+
 
 	// route to register a user (POST http://localhost:5000/api/register)
 	apiRoutes.post('/register',function(req,res){
 		console.log("register");
 		var db = req.db;
-		var collection = db.get('auth_users');
-		var users = db.get('authuser_counter');
-		users.findAndModify({query:{counterid: "counterId"},update: {$inc:{sequence_value:1}},new:true}, function(err,data){
+		var usersCollection = db.get('auth_users');
+		var counterCollection = db.get('authuser_counter');
+		counterCollection.findAndModify({query:{counterid: "counterId"},update: {$inc:{sequence_value:1}},new:true}, function(err,data){
 
 			var newUser = {
 				first_name: 	req.body.first_name,
@@ -93,7 +109,7 @@ module.exports = function(app) {
 				date_joined : new Date()
 			};
 			// console.log(newUser);
-			collection.insert(newUser, function(err, result){
+			usersCollection.insert(newUser, function(err, result){
 				if (err) throw err;
 
 				var token = jwt.sign(result, app.get('superSecret'), {
@@ -103,6 +119,7 @@ module.exports = function(app) {
 				res.json({
 					first_name:result.first_name,
 					last_name:result.last_name,
+					email:result.email,
 					token: token
 				});
 			});
@@ -154,27 +171,31 @@ module.exports = function(app) {
 		var db = req.db;
 		var userCollection = db.get('auth_users');
 		userCollection.find({ownerid:req.decoded.ownerid},function(err, result){
-			res.json(
-				// {first_name:req.decoded.first_name,
-				// 	last_name:req.decoded.last_name,
-				// 	email:req.decoded.email
-				// }
-				result[0]
-			);
+			var resData = result[0];
+			res.json({
+				"email":resData.email,
+				"first_name":resData.first_name,
+				"last_name":resData.last_name,
+				"current_city":resData.current_city,
+				"age":resData.age,
+				"mobile_number":resData.mobile_number,
+				"profile_image":resData.profile_image
+			});
 		})
 	});
 	apiRoutes.put('/profile',authenticate, function(req, res) {
 		var db = req.db;
 		var userCollection = db.get('auth_users');
-		userCollection.find({ownerid:req.decoded.ownerid},function(err, result){
-			res.json(
-				// {first_name:req.decoded.first_name,
-				// 	last_name:req.decoded.last_name,
-				// 	email:req.decoded.email
-				// }
-				result[0]
-			);
-		})
+		// console.log(req.body);
+		userCollection.update({
+			ownerid:req.decoded.ownerid
+		},{
+      $set: {"current_city":req.body.current_city,"age":req.body.age,"mobile_number":req.body.mobile_number}
+    },{ 
+      multi:true
+    },function(err, result){
+			res.status(200);
+		});
 	});
 
 	apiRoutes.post('/profile-image',authenticate,multipartMiddleware,function(req,res){
@@ -230,6 +251,17 @@ module.exports = function(app) {
 			blogCollection.find({},function(err,result){
 				if(err) throw err;
 				res.json({ resp: result });
+			});
+		});
+
+
+	hotelRouter.route('/list')
+		.post(function(req,res){
+			var db = req.db;
+			var hotelDealsCollection = db.get('hotelDeals');
+			hotelDealsCollection.insert(req.body,function(err){
+				if(err) throw err;
+				res.json(req.body).status(200);
 			});
 		});
 	// frontend routes =========================================================
