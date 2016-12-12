@@ -1,0 +1,18 @@
+{
+  "name": "fbproto",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "latest",
+    "angular-animate": "latest",
+    "angular-bootstrap": "latest",
+    "angular-cookie": "latest",
+    "angular-resource": "~1.4.5",
+    "angular-sanitize": "latest",
+    "angular-toastr": "latest",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "ng-file-upload": "~9.0.16",
+    "ng-img-crop": "latest"
+  }
+}

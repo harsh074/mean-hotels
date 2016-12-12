@@ -1,0 +1,67 @@
+<section id="profile">
+	<div class="col-md-12">
+		<h1 class="page-header">Profile</h1>
+		<ol class="breadcrumb">
+			<li class="active">
+				<i class="fa fa-bar-chart-o"></i> Profile
+			</li>
+		</ol>
+	</div>
+
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-2">
+				<span ng-if="profileimg == false">
+					<img  src="/img/profilephoto.png" class="img-thumbnail" />
+				</span>
+				<span ng-if="profileimg == true">
+					<img ng-src="{$ details.profile_image $}" class="img-thumbnail" />
+				</span>
+				<div class="updatepic">
+					<span>Update</span>
+					<input type="file"accept="image/*" class="chooseimg" id="profile_pic" file-type="image"  file-model="image($files,$errors)"/>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<div class="highlight">
+					<h4>
+						<span class="pull-left">PERSONAL</span>
+						<span class="pull-right editing" ng-click="editmode()" ng-hide="editing"><i class="fa fa-edit"></i> Edit</span>
+						<span class="pull-right editing" ng-click="reset()" ng-show="editing"><i class="fa fa-undo"></i> Cancel</span>
+					</h4>
+					<br/>
+					<div class="col-md-4">
+						<h5>Name</h5>
+						<p>{$ details.first_name+' '+details.last_name $}</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Email ID</h5>
+						<p>{$ details.email $}</p>
+					</div>
+					<div class="col-md-4">
+						<h5>Mobile Number</h5>
+						<p>{$ details.mobile_number $}</p>
+					</div>
+				</div>
+				<div class="highlight" ng-show="editing">
+					<h4>Manage Your Details</h4>
+					<form role="form" name="updateProfileForm" ng-submit="updateProfile(updateProfileForm)" novalidate>
+						<div class="form-group">
+							<label for="id_mobile">Mobile Number</label>
+							<input type="text" class="form-control" id="id_mobile" placeholder="Enter Mobile Number" ng-model="profileData.mobile_number">
+						</div>
+						<div class="form-group">
+							<label for="id_age">Age</label>
+							<input type="text" class="form-control" id="id_age" placeholder="Enter Age" ng-model="profileData.age">
+						</div>
+						<div class="form-group">
+							<label for="id_current_city">Current City</label>
+							<input type="text" class="form-control" id="id_current_city" placeholder="Enter Current City" ng-model="profileData.current_city">
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

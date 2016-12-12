@@ -1,0 +1,54 @@
+<section id="login_view">
+	<div class="container" ng-controller="LoginCtrl">
+		<div ng-if="!complete" class="text-center">
+			<h2>Welcome to FBProto</h2>
+			<div class="col-md-12">
+				<form role="form" class="form-horizontal" ng-submit="login(loginForm)" name="loginForm" ng-if="authenticated == false" novalidate>
+					<div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && (!loginForm.email.$pristine || submitted) && loginForm.email.$error.email}">
+
+						<label for="idEmail" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input name="email" id="idEmail" type="email" ng-model="model.email" placeholder="Email Id"
+								   class="form-control" ng-pattern="/^\w+([\.]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$/" required />
+						</div>
+						<p ng-show="loginForm.email.$error.required && (loginForm.email.$dirty || submitted)"
+						   class="help-block">Enter your email address.</p>
+						<div ng-show="pattern">
+							<p ng-show="loginForm.email.$error.pattern && (loginForm.email.$dirty || submitted)"
+							   class="help-block">Please check your email address.</p>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : loginForm.password.$invalid && (!loginForm.password.$pristine || submitted)}">
+						<label for="idPassword" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input name="password" id="idPassword" type="password" ng-model="model.password"
+								   placeholder="Password" class="form-control" required ng-minlength="6" />
+						</div>
+						<div ng-show="minlength">
+							<p ng-show="loginForm.password.$error.minlength && (loginForm.password.$dirty || submitted)"
+							   class="help-block">Your password should contain minimum 6 characters.</p>
+						</div>
+						<p ng-show="loginForm.password.$error.required && (loginForm.password.$dirty || submitted)"
+						   class="help-block">Enter your password.</p>
+						<p class="text-danger">{$error$}</p>
+					</div>
+
+					<div class="form-group">
+						<div class="col-md-6">
+							<label class="checkbox text-uppercase">
+								<input type="checkbox" name="stay-signed-in" ng-model="model.staySign">
+								 Stay signed in
+							</label>
+						</div>
+						<div class="col-md-3">
+							<button type="submit" ng-hide="authenticated" class="btn btn-primary">Login</button>
+						</div>
+						<div class="col-md-3">
+							<a ui-sref="register" class="btn btn-primary">Register</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
