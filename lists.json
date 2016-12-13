@@ -7,7 +7,14 @@
     "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-silicon-business-electronic-city-N7oBraog/?",
     "actual_price": 1350.0,
     "discount": 10,
-    "location": "11 & 12, Silicon Town, 2nd phase, Electronic City, Bengaluru, 560100"
+    "location": {
+        "address1":"11 & 12",
+        "address2":"Silicon Town, 2nd phase, Electronic City",
+        "city":"Bengaluru",
+        "state":"Karnataka",
+        "country":"India",
+        "pincode":"560100"
+    }
   },
   {
     "id": 2,
@@ -17,7 +24,14 @@
     "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-grand-continent-btm-layout-qVjknL1A/",
     "actual_price": 2099.0,
     "discount": 33,
-    "location": "NO.278, 7th main, Mico Layout, BTM 2nd Stage, Bengaluru, 560068\n"
+    "location": {
+        "address1":"NO.278",
+        "address2":"7th main, Mico Layout, BTM 2nd Stage",
+        "city":"Bengaluru",
+        "state":"Karnataka",
+        "country":"India",
+        "pincode":"560068"
+    }
   },
   {
     "id": 3,
@@ -27,7 +41,14 @@
     "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-annora-domlur-aOogwoqe/",
     "actual_price": 2449.0,
     "discount": 25,
-    "location": "#289, Amarjyothi Layout, West Wing, Domlur, Bengaluru, 560071"
+    "location": {
+        "address1":"#289",
+        "address2":"Amarjyothi Layout, West Wing, Domlur",
+        "city":"Bengaluru",
+        "state":"Karnataka",
+        "country":"India",
+        "pincode":"560071"
+    }
   },
   {
     "id": 4,
@@ -37,7 +58,14 @@
     "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-golden-pearl-koramangala-koramangala-GPoN4xj6/?checkin=2016-09-28&checkout=2016-09-29&roomconfig=1-0&roomtype=Oak",
     "actual_price": 2299.0,
     "discount": 5,
-    "location": "#395, 7th cross, 4th block, Opp Raheja Residency, Kormangala, Bengaluru, 560034"
+    "location": {
+        "address1":"#395, 7th cross, 4th block",
+        "address2":"Opp Raheja Residency, Kormangala",
+        "city":"Bengaluru",
+        "state":"Karnataka",
+        "country":"India",
+        "pincode":"560034"
+    }
   },
   {
     "id": 5,
@@ -47,7 +75,14 @@
     "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-akshaya-lalbagh-inn-jayanagar-Ae3Jevjb/?checkin=2016-09-28&checkout=2016-09-29&roomconfig=1-0&roomtype=Oak",
     "actual_price": 2499.0,
     "discount": 10,
-    "location": "No. 462, 2nd Block Jayanagar, Near Ashoka Pillar, Jayanagar, Bengaluru, 560011"
+    "location": {
+        "address1":"No. 462, 2nd Block Jayanagar",
+        "address2":"Near Ashoka Pillar, Jayanagar",
+        "city":"Bengaluru",
+        "state":"Karnataka",
+        "country":"India",
+        "pincode":"560011"
+    }
   },
   {
     "id": 6,
@@ -57,7 +92,14 @@
     "link": "https://www.treebohotels.com/hotels-in-new-delhi/treebo-singh-sons-karol-bagh-vMjaYj1m/",
     "actual_price": 2499.0,
     "discount": 40,
-    "location": "7A/10, WEA Channa Market, Karol Bagh, New Delhi, 110005"
+    "location": {
+        "address1":"7A/10, WEA Channa Market",
+        "address2":"Karol Bagh",
+        "city":"New Delhi",
+        "state":"New Delhi",
+        "country":"India",
+        "pincode":"110005"
+    }
   },
   {
     "id": 7,
@@ -67,7 +109,14 @@
     "link": "https://www.treebohotels.com/hotels-in-hyderabad/treebo-jp-plaza-basheerbagh-Mv3K9NL1/",
     "actual_price": 1999.0,
     "discount": 10,
-    "location": "#3-6-324, Lane Opp United India Insurance Co Ltd, Hyderguda, Basheerbagh, Hyderabad, 500048"
+    "location":{
+        "address1":"#3-6-324, Lane Opp United India Insurance Co Ltd",
+        "address2":"Hyderguda, Basheerbagh",
+        "city":"Hyderabad",
+        "state":"Telangana",
+        "country":"India",
+        "pincode":"500048"
+    }
   },
   {
     "id": 8,
@@ -77,7 +126,14 @@
     "link": "https://www.treebohotels.com/hotels-in-hyderabad/treebo-srico-banjara-hills-J1jG8Z3X/",
     "actual_price": 1999.0,
     "discount": 20,
-    "location": "Plot No 178/A, Road No 12 , Banjara Hills, Hyderabad, 500034"
+    "location": {
+        "address1":"Plot No 178/A, Road No 12",
+        "address2":"Banjara Hills",
+        "city":"Hyderabad",
+        "state":"Telangana",
+        "country":"India",
+        "pincode":"500034"
+    }
   },
   {
     "id": 9,
@@ -87,7 +143,14 @@
     "link": "https://www.treebohotels.com/hotels-in-chennai/treebo-saravana-boutique-inn-royapettah-Z9o5X3e1/",
     "actual_price": 1299.0,
     "discount": 25,
-    "location": "New No. 15, Old No. 9, Peters Road, Royapettah, Chennai, 600014"
+    "location": {
+        "address1":"New No. 15, Old No. 9, Peters Road",
+        "address2":"Royapettah",
+        "city":"Chennai",
+        "state":"Tamil Nadu",
+        "country":"India",
+        "pincode":"600014"
+    }
   },
   {
     "id": 10,
@@ -97,7 +160,14 @@
     "link": "https://www.treebohotels.com/hotels-in-chennai/treebo-hive-thoraipakkam-omr-q0Lr0X35/",
     "actual_price": 1799.0,
     "discount": 40,
-    "location": "No. 5/371, Annai Indira Nagar, Okkiam, Thoraipakkam, Chennai, 600097"
+    "location": {
+        "address1":"No. 5/371, Annai Indira Nagar",
+        "address2":"Okkiam, Thoraipakkam",
+        "city":"Chennai",
+        "state":"Tamil Nadu",
+        "country":"India",
+        "pincode":"600097"
+    }
   },
   {
     "id": 11,
@@ -107,7 +177,14 @@
     "link": "https://www.treebohotels.com/hotels-in-chennai/treebo-js-five-two-boutique-ra-puram-5D3ydxjJ/",
     "actual_price": 2999.0,
     "discount": 15,
-    "location": "New No. 18, Old No. 29, 2nd Main Road, RA Puram, Chennai, 600028"
+    "location": {
+        "address1":"New No. 18, Old No. 29, 2nd Main Road",
+        "address2":"RA Puram",
+        "city":"Chennai",
+        "state":"Tamil Nadu",
+        "country":"India",
+        "pincode":"600028"
+    }
   },
   {
     "id": 12,
@@ -117,7 +194,14 @@
     "link": "https://www.treebohotels.com/hotels-in-chennai/treebo-abeliya-porur-QZj16Y34/",
     "actual_price": 2299.0,
     "discount": 10,
-    "location": "No. 23 & 24, Nakeeran Street, Kaviya Gardens, Mangala Nagar, Porur, Chennai, 600116"
+    "location": {
+        "address1":"No. 23 & 24, Nakeeran Street, Kaviya Gardens",
+        "address2":"Mangala Nagar, Porur",
+        "city":"Chennai",
+        "state":"Tamil Nadu",
+        "country":"India",
+        "pincode":"600116"
+    }
   },
   {
     "id": 13,
@@ -127,7 +211,14 @@
     "link": "https://www.treebohotels.com/hotels-in-mumbai/treebo-archana-residency-mulund-awo0loZk/?",
     "actual_price": 4299.0,
     "discount": 20,
-    "location": "Next to R-Mall / Big Bazar, LBS Marg, Mulund (W), Mumbai, 400080"
+    "location": {
+        "address1":"Next to R-Mall / Big Bazar",
+        "address2":"LBS Marg, Mulund (W)",
+        "city":"Mumbai",
+        "state":"Maharashtra",
+        "country":"India",
+        "pincode":"400080"
+    }
   },
   {
     "id": 14,
@@ -137,7 +228,14 @@
     "link": "https://www.treebohotels.com/hotels-in-mumbai/treebo-new-castle-khar-west-Mv3KNj1k/?",
     "actual_price": 4999.0,
     "discount": 10,
-    "location": "355, Linking Road, Above Only Parathas Restaurant, Khar West, Mumbai, 400052"
+    "location": {
+        "address1":"355, Linking Road, Above Only Parathas Restaurant",
+        "address2":"Khar West",
+        "city":"Mumbai",
+        "state":"Maharashtra",
+        "country":"India",
+        "pincode":"400052"
+    }
   },
   {
     "id": 15,
@@ -147,7 +245,14 @@
     "link": "https://www.treebohotels.com/hotels-in-goa/treebo-rain-forest-enclave-arpora-aOog9wjq/",
     "actual_price": 5199.0,
     "discount": 25,
-    "location": "262/6, ward 14, Ghatbhat waddo, Arpora, Bardez, Goa, 403518"
+    "location": {
+        "address1":"262/6, ward 14, Ghatbhat waddo",
+        "address2":"Arpora",
+        "city":"Bardez",
+        "state":"Goa",
+        "country":"India",
+        "pincode":"403518"
+    }
   },
   {
     "id": 16,
@@ -157,6 +262,13 @@
     "link": "https://www.treebohotels.com/hotels-in-gurgaon/treebo-bizotel-green-sector-14-QZj1wNo4/?",
     "actual_price": 2099.0,
     "discount": 20,
-    "location": "2390/3, Old Delhi-Gurgaon Road, Opp. Dingra Motors, Sector 14, Gurgaon, 122001"
+    "location": {
+        "address1":"2390/3, Old Delhi-Gurgaon Road",
+        "address2":"Opp. Dingra Motors, Sector 14",
+        "city":"Gurgaon",
+        "state":"haryana",
+        "country":"India",
+        "pincode":"122001"
+    }
   }
 ]

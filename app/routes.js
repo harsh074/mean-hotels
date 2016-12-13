@@ -259,11 +259,74 @@ module.exports = function(app) {
 		.post(function(req,res){
 			var db = req.db;
 			var hotelDealsCollection = db.get('hotelDeals');
-			hotelDealsCollection.insert(req.body,function(err){
-				if(err) throw err;
-				res.json(req.body).status(200);
+			hotelDealsCollection.insert(req.body,function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
+				res.json(result).status(200);
+			});
+		})
+		.get(function(req,res){
+			var db = req.db;
+			var hotelDealsCollection = db.get('hotelDeals');
+			hotelDealsCollection.find({},function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
+				res.json(result).status(200);
 			});
 		});
+
+	hotelRouter.route('/list/:nextIndex')
+		.get(function(req,res){
+			var nextIndex = 5;
+			var skipIndex = req.params.nextIndex-5;
+			// console.log(nextIndex);
+			var db = req.db;
+			var hotelDealsCollection = db.get('hotelDeals');
+			hotelDealsCollection.find({},{limit:nextIndex,skip:skipIndex},function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
+				res.json(result).status(200);
+			});
+		});
+
+	hotelRouter.route('/stats')
+		.get(function(req,res){
+			var db = req.db;
+			var hotelDealsCollection = db.get('hotelDeals');
+			var responseJson = {'min_final_price': '','max_final_price': '','avg_rating': '','area_distribution': ''};
+
+			/*hotelDealsCollection.aggregate([{$group : {
+				_id:null,
+				avg_rating : {$avg : "$rating"},
+				max_final_price:{$max: { $multiply: [ "$actual_price", {$subtract:[1, {$divide:["$discount",100]} ] } ] }},
+				min_final_price:{$min: { $multiply: [ "$actual_price", {$subtract:[1, {$divide:["$discount",100]} ] } ] }},
+				area_distribution:{$group:{"$location.$city":{$sum:1}}}
+			}}],function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
+				console.log(result);
+				res.json(result).status(200);
+			});*/
+			hotelDealsCollection.distinct('location.city',function(err,result){
+				console.log(result);
+				res.json(result).status(200);
+			});
+		});
+
+		/*{
+	    "id": 1,
+	    "name": "Treebo Silicon Business",
+	    "image": "https://images.treebohotels.com/files/Treebo_Silicon_Business/04_Corridor_1.jpg?w=250&fit=crop&fm=jpg&h=200",
+	    "rating": 3.8,
+	    "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-silicon-business-electronic-city-N7oBraog/?",
+	    "actual_price": 1350.0,
+	    "discount": 10,
+	    "location": "11 & 12, Silicon Town, 2nd phase, Electronic City, Bengaluru, 560100"
+	  }*/
 	// frontend routes =========================================================
 	// route to handle all angular requests
 	app.get('/', function(req, res) {
