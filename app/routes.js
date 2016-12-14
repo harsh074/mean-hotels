@@ -14,10 +14,12 @@ var mv = require('mv');
 
 var blogRouter = express.Router({mergeParams: true});
 var hotelRouter = express.Router({mergeParams: true});
+var customerRouter = express.Router({mergeParams: true});
 module.exports = function(app) {
 	app.use('/api', apiRoutes);
 	apiRoutes.use('/blog', blogRouter);
 	apiRoutes.use('/hotel', hotelRouter);
+	apiRoutes.use('/customer', customerRouter);
 
 	function hashPassword(password) {
 		return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
@@ -70,9 +72,9 @@ module.exports = function(app) {
 		var db = req.db;
 		var userCollection = db.create('auth_users');
 		var counterCollection =  db.create('authuser_counter');
-		// var blogCollection = db.get('blogs');
+		var customerCollection =  db.create('customer');
+		var hotelDealsCollection =  db.create('hotelDeals');
 		counterCollection.insert({"counterid": "counterId","sequence_value" : 1});
-		// blogCollection.remove({});
 		res.json({ message: 'Done' });
 	});
 
@@ -80,9 +82,14 @@ module.exports = function(app) {
 	apiRoutes.get('/clearCollection',function(req,res){
 		var db = req.db;
 		var userCollection = db.get('auth_users');
-		var counterCollection =  db.get('authuser_counter');
+		var counterCollection = db.get('authuser_counter');
+		var customerCollection = db.get('customer');
+		var hotelDealsCollection = db.get('hotelDeals');
 		var blogCollection = db.get('blogs');
 		userCollection.remove({});
+		customerCollection.remove({});
+		hotelDealsCollection.remove({});
+
 		counterCollection.remove({});
 		counterCollection.insert({"counterid": "counterId","sequence_value" : 1});
 		// counterCollection.findAndModify({query:{"counterid": "counterId"},update:{$set:{"sequence_value" : 1}}});
@@ -186,7 +193,7 @@ module.exports = function(app) {
 	apiRoutes.put('/profile',authenticate, function(req, res) {
 		var db = req.db;
 		var userCollection = db.get('auth_users');
-		// console.log(req.body);
+		console.log(req.decoded);
 		userCollection.update({
 			ownerid:req.decoded.ownerid
 		},{
@@ -194,7 +201,10 @@ module.exports = function(app) {
     },{ 
       multi:true
     },function(err, result){
-			res.status(200);
+    	if(err){
+				res.json(err).status(400);
+			};
+			res.json({message:'done'}).status(200);
 		});
 	});
 
@@ -235,12 +245,18 @@ module.exports = function(app) {
 				data_created: new Date()
 			};
 			blogCollection.insert(blog,function(err,result){
-				if(err) throw err;
+				if(err){
+					res.json(err).status(400);
+				};
 				mv(tmp_path, target_path,{mkdirp: true}, function(err) {
-					if(err) throw err;
-					res.status(200).json({ resp: result });
-					fs.unlink(tmp_path, function() {
-          	if (err) throw err;
+					if(err){
+						res.json(err).status(400);
+					};
+					res.json({ resp: result }).status(200);
+					fs.unlink(tmp_path, function(err1) {
+          	if(err1){
+							console.log(err);
+						}
       		});
 				});
 			});
@@ -249,8 +265,10 @@ module.exports = function(app) {
 			var db = req.db;
 			var blogCollection = db.get('blogs');
 			blogCollection.find({},function(err,result){
-				if(err) throw err;
-				res.json({ resp: result });
+				if(err){
+					res.json(err).status(400);
+				};
+				res.json({ resp: result }).status(200);
 			});
 		});
 
@@ -296,37 +314,74 @@ module.exports = function(app) {
 		.get(function(req,res){
 			var db = req.db;
 			var hotelDealsCollection = db.get('hotelDeals');
-			var responseJson = {'min_final_price': '','max_final_price': '','avg_rating': '','area_distribution': ''};
-
-			/*hotelDealsCollection.aggregate([{$group : {
+			hotelDealsCollection.aggregate([{$group : {
 				_id:null,
 				avg_rating : {$avg : "$rating"},
 				max_final_price:{$max: { $multiply: [ "$actual_price", {$subtract:[1, {$divide:["$discount",100]} ] } ] }},
-				min_final_price:{$min: { $multiply: [ "$actual_price", {$subtract:[1, {$divide:["$discount",100]} ] } ] }},
-				area_distribution:{$group:{"$location.$city":{$sum:1}}}
+				min_final_price:{$min: { $multiply: [ "$actual_price", {$subtract:[1, {$divide:["$discount",100]} ] } ] }}
 			}}],function(err,result){
 				if(err){
 					res.json(err).status(400);
 				};
-				console.log(result);
+
+				// need to update this call in future. Not able to do it right now. but have to club it with upper query.
+				hotelDealsCollection.aggregate([
+					{$group: {_id: "$location.city", zcount: {$sum: 1}}}
+				],function(err1,result1){
+					if(err1){
+						res.json(err1).status(400);
+					};
+					result[0].area_distribution = {};
+					for(var i=0; i<result1.length;i++){
+						result[0].area_distribution[result1[i]._id] = result1[i].zcount;
+					}
+					res.json(result).status(200);
+				});
+			});
+		});
+
+	customerRouter.route('/all')
+		.post(function(req,res){
+			var db = req.db;
+			var customerCollection = db.get('customer');
+			customerCollection.insert(req.body,function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
 				res.json(result).status(200);
-			});*/
-			hotelDealsCollection.distinct('location.city',function(err,result){
-				console.log(result);
+			});
+		})
+		.get(function(req,res){
+			var db = req.db;
+			var customerCollection = db.get('customer');
+			customerCollection.find({},function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
 				res.json(result).status(200);
 			});
 		});
 
-		/*{
-	    "id": 1,
-	    "name": "Treebo Silicon Business",
-	    "image": "https://images.treebohotels.com/files/Treebo_Silicon_Business/04_Corridor_1.jpg?w=250&fit=crop&fm=jpg&h=200",
-	    "rating": 3.8,
-	    "link": "https://www.treebohotels.com/hotels-in-bengaluru/treebo-silicon-business-electronic-city-N7oBraog/?",
-	    "actual_price": 1350.0,
-	    "discount": 10,
-	    "location": "11 & 12, Silicon Town, 2nd phase, Electronic City, Bengaluru, 560100"
-	  }*/
+	customerRouter.route('/query')
+		.get(function(req,res){
+			var db = req.db;
+			var customerCollection = db.get('customer');
+			var key = req.query.key;
+			var limit = req.query.limit;
+			var searchQuery = {$text:{$search:"An"}};
+			customerCollection.index("fullName");
+			console.log(customerCollection.indexes());
+			res.json("result").status(200);
+			// customerCollection.find(searchQuery,function(err,result){
+			// 	if(err){
+			// 		res.json(err).status(400);
+			// 	};
+			// 	res.json(result).status(200);
+			// });
+			
+
+		});
+
 	// frontend routes =========================================================
 	// route to handle all angular requests
 	app.get('/', function(req, res) {
