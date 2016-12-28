@@ -368,16 +368,17 @@ module.exports = function(app) {
 			var customerCollection = db.get('customer');
 			var key = req.query.key;
 			var limit = req.query.limit;
-			var searchQuery = {$text:{$search:"An"}};
-			customerCollection.index("fullName");
-			console.log(customerCollection.indexes());
-			res.json("result").status(200);
-			// customerCollection.find(searchQuery,function(err,result){
-			// 	if(err){
-			// 		res.json(err).status(400);
-			// 	};
-			// 	res.json(result).status(200);
-			// });
+			var searchQuery =  { fullName: { $regex: /^andreas d/, $options: 'i' } }
+			// var searchQuery = {$text:{$search:"An"}};
+			// customerCollection.index("fullName");
+			// console.log(customerCollection.indexes());
+			// res.json("result").status(200);
+			customerCollection.find(searchQuery,function(err,result){
+				if(err){
+					res.json(err).status(400);
+				};
+				res.json(result).status(200);
+			});
 			
 
 		});
